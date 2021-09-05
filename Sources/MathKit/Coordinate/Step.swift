@@ -9,7 +9,7 @@ import Foundation
 
 public extension Axis.Direction {
 
-    public struct Step {
+    struct Step {
 
         let horisontal: Int
         let vertical: Int
