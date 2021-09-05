@@ -7,9 +7,9 @@
 
 import Foundation
 
-public extension Axis {
+extension Axis {
 
-    enum Direction: CaseIterable {
+    public enum Direction: CaseIterable {
 
         case none
         case left

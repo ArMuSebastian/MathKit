@@ -7,9 +7,9 @@
 
 import Foundation
 
-public extension Axis.Direction {
+extension Axis.Direction {
 
-    struct Step {
+    public struct Step {
 
         let horisontal: Int
         let vertical: Int
