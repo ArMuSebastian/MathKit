@@ -20,18 +20,4 @@ public enum Radix: Int {
         }
     }
 
-    func array(from number: Int) -> [Int] {
-        var ints: [Int] = []
-
-        var mutatingNumber = number
-        while mutatingNumber != 0 {
-
-            ints.append(mutatingNumber & self.max)
-            mutatingNumber = mutatingNumber >> self.rawValue
-
-        }
-
-        return ints
-    }
-
 }

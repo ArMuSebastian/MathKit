@@ -9,6 +9,7 @@ import Foundation
 
 public struct RadixCoder {
 
+    static
     public func array(from number: Int, usingRadix radix: Radix) -> [Int] {
         var ints: [Int] = []
 
