@@ -11,8 +11,8 @@ extension Axis.Direction {
 
     public struct Step {
 
-        let horisontal: Int
-        let vertical: Int
+        public let horisontal: Int
+        public let vertical: Int
 
         static
         public func * (
