@@ -10,4 +10,11 @@ final class RadixTests: XCTestCase {
         XCTAssertEqual(arr, arry)
     }
 
+    func testRadixCreateIntFromArray() {
+        let num = 525345
+        let numy = RadixCoder.int(from: [1, 2, 4, 0, 8])
+
+        XCTAssertEqual(num, numy.payload)
+    }
+
 }

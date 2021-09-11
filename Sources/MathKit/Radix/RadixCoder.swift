@@ -24,4 +24,17 @@ public struct RadixCoder {
         return ints
     }
 
+    static
+    public func int(from array: [Int]) -> (payload: Int, radix: Radix) {
+        let r = Radix.f
+
+        let int = array
+            .reversed()
+            .reduce(0) { encoded, newNumber in
+                return (encoded << r.rawValue) + newNumber
+            }
+
+        return (int, r)
+    }
+
 }
