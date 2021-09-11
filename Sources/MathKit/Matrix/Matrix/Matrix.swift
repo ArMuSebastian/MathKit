@@ -14,7 +14,7 @@ public struct Matrix<Element> {
     public typealias Payload = [[Element]]
 
     /// Values of matrix stored in two-dimensional array
-    private var payload: Payload
+    public private(set) var payload: Payload
     /// Matrix size
     public private(set) var size: Size
     
