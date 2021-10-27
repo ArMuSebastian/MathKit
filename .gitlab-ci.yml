@@ -4,4 +4,5 @@ stages:
 build_project:
   stage: build
   script:
-    - swift test
+    - xcodebuild -scheme MathKit -configuration "Debug" -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty   
+    - xcodebuild -scheme MathKit -configuration "Debug" -destination 'platform=macOS,variant=Mac Catalyst' test | xcpretty 
