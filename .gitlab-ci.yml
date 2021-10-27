@@ -6,3 +6,7 @@ build_project:
   script:
     - xcodebuild -scheme MathKit -configuration "Debug" -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty   
     - xcodebuild -scheme MathKit -configuration "Debug" -destination 'platform=macOS,variant=Mac Catalyst' test | xcpretty 
+  tags:
+    - ios_11-3
+    - xcode_9-3
+    - macos_10-13
