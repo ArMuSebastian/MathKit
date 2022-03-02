@@ -13,7 +13,7 @@ protocol MatrixElementable: Randomable {
 extension Int: MatrixElementable {
 
     static func random() -> Int {
-        return .random(in: 0...100)
+        return .random(in: 10...99)
     }
 
 }

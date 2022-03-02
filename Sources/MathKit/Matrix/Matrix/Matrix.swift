@@ -15,12 +15,8 @@ public struct Matrix<Element> {
 
     /// Values of matrix stored in two-dimensional array
     public private(set) var payload: Payload
-    /// Matrix size
-    public private(set) var size: Size
-    
-    // MARK: inits
 
-    /// Kekw
+    // MARK: - inits
     /// - Parameters:
     ///   - payload: two-dimensional array
     /// - Throws: Matrix.Error.invalidPayload if *payload* is not matrix compatible
@@ -28,52 +24,51 @@ public struct Matrix<Element> {
         guard payload.isValidMatrixPayload else {
             throw Matrix.Error.invalidPayload(payload)
         }
-        let size = Size(rows: payload.count,
-                        columns: payload[0].count)
-        self.init(with: payload, of: size)
-    }
-
-    /// Designated init
-    /// - Parameters:
-    ///   - payload: two-dimensional matrix compatible array
-    ///   - size: size of matrix
-    private init(with payload: Matrix.Payload, of size: Size) {
         self.payload = payload
-        self.size = size
     }
 
 }
 
-extension Matrix: Sequence {
+// MARK: - Subscripts
+extension Matrix {
 
-    public func makeIterator() -> AnyIterator<Element> {
+    public subscript(index: Index) -> Element {
+        get {
+            self.payload[index.row][index.column]
+        }
+        set {
+            self.payload[index.row][index.column] = newValue
+        }
+    }
 
-        var currentIndex: Index = self.size.startIndex
-
-        return AnyIterator {
-
-            if !self.size.contains(currentIndex) {
+    private subscript(safe index: Index) -> Element? {
+        get {
+            if !self.size.contains(index) {
                 return nil
             } else {
-
-                let element = self[currentIndex]
-                if currentIndex.column < self.size.columns - 1 {
-                    currentIndex.column += 1
-                } else {
-                    currentIndex.row = currentIndex.row + 1
-                    currentIndex.column = 0
-                }
-                return element
+                return self[index]
             }
         }
     }
 
+    public subscript(_ indices: [Index]) -> [Element] {
+        indices.map { self[$0] }
+    }
+
 }
 
-extension Matrix: Collection {
+// MARK: - Indexing
+extension Matrix {
 
     public typealias Index = MathKit.Index
     public typealias Element = Element
+
+    public var size: Size {
+        return Size(
+            rows: payload.count,
+            columns: payload.first!.count
+        )
+    }
 
     public var startIndex: Index {
         return self.size.startIndex
@@ -83,65 +78,90 @@ extension Matrix: Collection {
         return self.size.endIndex
     }
 
-    /// Default matrix subscript for matrix
-    /// - Parameters:
-    ///   - index: a value that contains (row, column) by which element can be found in  matrix
-    public subscript(index: Index) -> Element {
-        get {
-            return payload[index.row][index.column]
-        }
-        set {
-            payload[index.row][index.column] = newValue
-        }
+    public var indices: ClosedRange<Index> {
+        startIndex...endIndex
     }
 
-    public subscript(_ indices: [Index]) -> [Element] {
-        return indices.map { self[$0] }
+    public func index(after i: Index) -> Index {
+        return _index(after: i)!
     }
 
-    // Method that returns the next index when iterating
-    public func index(after currentIndex: Index) -> Index {
-        let nextIndex: Index
-        if currentIndex.column < self.size.columns - 1 {
+    private func _index(after i: Index) -> Index? {
+        let nextIndex: Index?
+        if i.column < self.size.endIndex.column {
             nextIndex = Index(
-                row: currentIndex.row,
-                column: currentIndex.column + 1
+                row: i.row,
+                column: i.column + 1
+            )
+        } else if i.row < self.size.endIndex.row {
+            nextIndex = Index(
+                row: i.row + 1,
+                column: self.size.startIndex.column
             )
         } else {
-            nextIndex = Index(
-                row: currentIndex.row + 1,
-                column: 0
-            )
+            nextIndex = nil
         }
         return nextIndex
     }
 
-}
+    public func index(before i: Index) -> Index {
+        return _index(before: i)!
+    }
 
-extension Matrix: BidirectionalCollection {
-
-    public func index(before currentIndex: Index) -> Index {
-        let prevIndex: Index
-        if currentIndex.column > 0 {
+    public func _index(before i: Index) -> Index? {
+        let prevIndex: Index?
+        if i.column > self.size.startIndex.column {
             prevIndex = Index(
-                row: currentIndex.row,
-                column: currentIndex.column - 1
+                row: i.row,
+                column: i.column - 1
+            )
+        } else if i.row > self.size.startIndex.row {
+            prevIndex = Index(
+                row: i.row - 1,
+                column: self.size.endIndex.column
             )
         } else {
-            prevIndex = Index(
-                row: currentIndex.row - 1,
-                column: self.size.columns - 1
-            )
+            prevIndex = nil
         }
         return prevIndex
     }
 
 }
 
+// MARK: - Sequence
+extension Matrix: Sequence {
+
+    public func makeIterator() -> AnyIterator<Element> {
+
+        var currentIndex: Index? = self.size.startIndex
+
+        return AnyIterator {
+            defer {
+                currentIndex = currentIndex.flatMap(_index(after:))
+            }
+
+            return currentIndex.flatMap { self[safe: $0] }
+        }
+    }
+
+}
+
+// MARK: - Collection
+extension Matrix: Collection {
+
+}
+
+// MARK: - BidirectionalCollection
+extension Matrix: BidirectionalCollection {
+
+}
+
+// MARK: - RandomAccessCollection
 extension Matrix: RandomAccessCollection {
 
 }
 
+// MARK: - CustomStringConvertible
 extension Matrix: CustomStringConvertible where Element: CustomStringConvertible {
 
     public var description: String {

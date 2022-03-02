@@ -66,10 +66,38 @@ final class MatrixSizeTests: XCTestCase {
 
     func testAnyMatrixZiseHasZeroStart() {
 
-        typealias Type = Int
         let size = TestableThings.Size.random()
 
         XCTAssertEqual(size.startIndex, TestableThings.Position.zero())
+    }
+
+    func testMapMatrixPayloadSize() {
+
+        typealias Type = Int
+
+        let matrix: Matrix<Type> = TestableThings.Matrix.random(of: .init(rows: 2, columns: 3))
+
+        
+        let indicess: Array<Index> = Array(matrix.indices)
+        print(indicess + [Index(row: 1, column: 2)])
+        print(matrix[indicess + [Index(row: 1, column: 2)]])
+//        print(indicess)
+//        print(matrix)
+//        print(matrix[indicess])
+//        print(matrix.enumerated())
+//        print(Array(matrix.enumerated()).count)
+//        print([1,2,3,4,5].indices)
+//        print([1,2,3,4,5].indices.map { $0 })
+//        print(matrix.indices)
+//        print(matrix.indices.map { $0 })
+//        let c = matrix.map {
+//            $0
+//
+//        }.count
+//        print(c)
+//        print(matrix.flatMap { $0 }.count)
+//        print(matrix.compactMap { $0 }.count)
+        XCTAssertEqual(matrix.indices.count, matrix.size.rows * matrix.size.columns)
     }
 
 }
