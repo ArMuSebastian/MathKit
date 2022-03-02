@@ -103,14 +103,42 @@ extension Matrix: Collection {
     public func index(after currentIndex: Index) -> Index {
         let nextIndex: Index
         if currentIndex.column < self.size.columns - 1 {
-            nextIndex = Index(row: currentIndex.row,
-                              column: currentIndex.column + 1)
+            nextIndex = Index(
+                row: currentIndex.row,
+                column: currentIndex.column + 1
+            )
         } else {
-            nextIndex = Index(row: currentIndex.row + 1,
-                              column: 0)
+            nextIndex = Index(
+                row: currentIndex.row + 1,
+                column: 0
+            )
         }
         return nextIndex
     }
+
+}
+
+extension Matrix: BidirectionalCollection {
+
+    public func index(before currentIndex: Index) -> Index {
+        let prevIndex: Index
+        if currentIndex.column > 0 {
+            prevIndex = Index(
+                row: currentIndex.row,
+                column: currentIndex.column - 1
+            )
+        } else {
+            prevIndex = Index(
+                row: currentIndex.row - 1,
+                column: self.size.columns - 1
+            )
+        }
+        return prevIndex
+    }
+
+}
+
+extension Matrix: RandomAccessCollection {
 
 }
 
