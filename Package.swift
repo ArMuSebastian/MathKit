@@ -18,11 +18,43 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
+
+        .target(
+            name: "RadixKit",
+            dependencies: []
+        ),
+        .testTarget(
+            name: "RadixKitTests",
+            dependencies: ["RadixKit"]
+        ),
+
+        .target(
+            name: "MatrixKit",
+            dependencies: []
+        ),
+        .testTarget(
+            name: "MatrixKitTests",
+            dependencies: ["MatrixKit"]
+        ),
+
+        .target(
+            name: "CoordinateKit",
+            dependencies: []
+        ),
+//        .testTarget(
+//            name: "CoordinateKitTests",
+//            dependencies: ["CoordinateKit"]
+//        ),
+
+
         .target(
             name: "MathKit",
-            dependencies: []),
-        .testTarget(
-            name: "MathKitTests",
-            dependencies: ["MathKit"]),
+            dependencies: ["CoordinateKit", "RadixKit", "MatrixKit"]
+        ),
+//        .testTarget(
+//            name: "MathKitTests",
+//            dependencies: ["MathKit"]
+//        ),
+
     ]
 )

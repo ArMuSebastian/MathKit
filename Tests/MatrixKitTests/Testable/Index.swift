@@ -1,5 +1,3 @@
-import struct MathKit.Index
-
 extension TestableThings {
 
     struct Position {

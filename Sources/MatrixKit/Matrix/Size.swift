@@ -12,22 +12,26 @@ public struct Size {
     public private(set) var rows: Int
     public private(set) var columns: Int
 
+    public var count: Int {
+        self.rows * self.columns
+    }
+
     public init(rows: Int, columns: Int) {
         self.rows = rows
         self.columns = columns
     }
 
-    public var startIndex: Index {
-        return Index(row: 0, column: 0)
-    }
-
-    public var endIndex: Index {
-        return Index(row: rows - 1, column: columns - 1)
-    }
-
 }
 
 extension Size {
+
+    internal var startIndex: Index {
+        return Index(row: 0, column: 0)
+    }
+
+    internal var endIndex: Index {
+        return Index(row: rows - 1, column: columns - 1)
+    }
 
     public func contains(_ index: Index) -> Bool {
         if (self.startIndex.row..<self.endIndex.row) ~= index.row,
@@ -43,7 +47,6 @@ extension Size {
 extension Size: Hashable {
 
 }
-
 
 extension Size: Equatable {
 

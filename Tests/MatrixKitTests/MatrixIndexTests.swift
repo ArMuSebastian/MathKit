@@ -1,5 +1,4 @@
 import XCTest
-import MathKit
 
 final class MatrixCreationTests: XCTestCase {
 

@@ -1,5 +1,5 @@
 import XCTest
-import MathKit
+import RadixKit
 
 final class RadixTests: XCTestCase {
 
