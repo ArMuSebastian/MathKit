@@ -80,13 +80,13 @@ extension Matrix {
 
     private subscript(safe index: Index) -> Element? {
         get {
-            self.safeElement(by: index)
+            self.elements[index]
         }
     }
 
     public subscript(index: Index) -> Element {
         get {
-            self[safe: index]!
+            safeElement(by: index)!
         }
     }
 
@@ -194,14 +194,14 @@ extension Matrix: CustomStringConvertible where Element: CustomStringConvertible
         let elements = self[self.indices]
             .chunked(by: self.size.columns)
 
-        return elements.map {
-                "| "
-                +
-                $0.map { String(describing: $0) }
-                .joined(separator: ", ")
-                +
-                " |"
-        }.joined(separator: "\n")
+        return StringTable(
+            accessory: TableAccessory(
+                rowNamePredicate: .anything(something: Array((0 + 1)..<(elements.count + 1))),
+                columnNamePredicate: .anything(something: Array((0 + 1)..<((elements.first?.count ?? 0) + 1))),
+                divider: .anything(something: "Row \\ Column")
+            )
+        )
+            .string(from: elements)
     }
 
 }

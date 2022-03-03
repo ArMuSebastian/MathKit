@@ -15,3 +15,13 @@ extension Int: MatrixElementable {
     }
 
 }
+
+extension String: MatrixElementable {
+
+    static func random() -> String {
+
+        String(repeating: "a", count: Int.random(in: 1...15))
+    }
+
+}
+

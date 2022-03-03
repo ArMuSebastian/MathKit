@@ -87,17 +87,14 @@ final class MatrixSizeTests: XCTestCase {
 
     func testMapsProducesSameAmounOfElements() {
 
-        typealias Type = Int
+        typealias Type = String
 
-        let matrix: Matrix<Type> = TestableThings.Matrix.random()
+        let matrix: Matrix<Type> = TestableThings.Matrix.random(of: Size.init(rows: 4, columns: 4))
 
         let elementsCount =
         [
             matrix.indices.count,
-            matrix.size.count,
-//            matrix.map { $0 }.count,
-//            matrix.flatMap { $0 }.count,
-//            matrix.compactMap { $0 }.count
+            matrix.size.count
         ]
 
         XCTAssertEqual(Set(elementsCount).count, 1)
