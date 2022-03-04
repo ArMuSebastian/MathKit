@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ConsoleDrawKit",
+        "repositoryURL": "https://gitlab.com/ArMuSebastian/consoledrawkit",
+        "state": {
+          "branch": "master",
+          "revision": "80a3430495d738b7a07cf4e6e31f08b014e7f332",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

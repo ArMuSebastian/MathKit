@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ConsoleDrawKit
 
 public struct Matrix<Element> {
 
@@ -194,12 +195,13 @@ extension Matrix: CustomStringConvertible where Element: CustomStringConvertible
         let elements = self[self.indices]
             .chunked(by: self.size.columns)
 
-        return StringTable(
-            accessory: TableAccessory(
-                rowNamePredicate: .anything(something: Array((0 + 1)..<(elements.count + 1))),
-                columnNamePredicate: .anything(something: Array((0 + 1)..<((elements.first?.count ?? 0) + 1))),
-                divider: .anything(something: "Row \\ Column")
-            )
+        return ConsoleDrawKit.Table(
+            accessory: Table.Accessory(
+                headerAccessory: .number,
+                assideAccessory: .number,
+                divideAccessory: .backslash
+            ),
+            characterSet: Table.DrawingCharacterSet.second
         )
             .string(from: elements)
     }

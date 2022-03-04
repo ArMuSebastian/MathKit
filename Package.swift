@@ -5,56 +5,61 @@ import PackageDescription
 
 let package = Package(
     name: "MathKit",
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "MathKit",
-            targets: ["MathKit"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-
-        .target(
-            name: "RadixKit",
-            dependencies: []
-        ),
-        .testTarget(
-            name: "RadixKitTests",
-            dependencies: ["RadixKit"]
-        ),
-
-        .target(
-            name: "MatrixKit",
-            dependencies: []
-        ),
-        .testTarget(
-            name: "MatrixKitTests",
-            dependencies: ["MatrixKit"]
-        ),
-
-        .target(
-            name: "CoordinateKit",
-            dependencies: []
-        ),
-//        .testTarget(
-//            name: "CoordinateKitTests",
-//            dependencies: ["CoordinateKit"]
-//        ),
-
-
-        .target(
-            name: "MathKit",
-            dependencies: ["CoordinateKit", "RadixKit", "MatrixKit"]
-        ),
-//        .testTarget(
-//            name: "MathKitTests",
-//            dependencies: ["MathKit"]
-//        ),
-
-    ]
+    products:
+        [
+            .library(
+                name: "MathKit",
+                targets:
+                    [
+                        "MathKit"
+                    ]
+            ),
+        ],
+    dependencies:
+        [
+            .package(
+                name: "ConsoleDrawKit",
+                url: "https://gitlab.com/ArMuSebastian/consoledrawkit",
+                .branch("master")
+            )
+        ],
+    targets:
+        [
+            .target(
+                name: "RadixKit"
+            ),
+            .target(
+                name: "MatrixKit",
+                dependencies:
+                    [
+                        "ConsoleDrawKit"
+                    ]
+            ),
+            .target(
+                name: "CoordinateKit"
+            ),
+            .testTarget(
+                name: "MatrixKitTests",
+                dependencies:
+                    [
+                        "MatrixKit"
+                    ]
+            ),
+            .testTarget(
+                name: "RadixKitTests",
+                dependencies:
+                    [
+                        "RadixKit"
+                    ]
+            ),
+            .target(
+                name: "MathKit",
+                dependencies:
+                    [
+                        "CoordinateKit",
+                        "RadixKit",
+                        "MatrixKit"
+                    ]
+            )
+        ]
 )
